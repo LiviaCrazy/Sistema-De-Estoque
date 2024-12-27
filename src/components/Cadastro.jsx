@@ -31,7 +31,7 @@ const Cadastro = () => {
       return;
     }
 
-    const newUser = {
+    const newUser = { 
       nome: nomeTrimmed,
       email: emailTrimmed,
       senha: senhaTrimmed,
@@ -57,9 +57,9 @@ const Cadastro = () => {
       </div>
 
       <div className="flex-1 bg-gray-200 flex flex-col items-center justify-center p-2 relative font-poppins">
-        <img
-          className="absolute h-[200px] top-[15px] transform -translate-x-36 mb-6 left-96"
-          src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
+      <img
+          className="absolute h-[200px] top-[90px] transform -translate-x-64 mb-4 left-1/2"
+          src="https://alest.com.br/wp-content/uploads/2018/12/brand.png"
           alt="Logo Tijuca"
         />
         <form className="w-full max-w-lg space-y-5" onSubmit={handleCadastro}>
@@ -129,7 +129,7 @@ const Cadastro = () => {
           </motion.button>
 
           <p className="text-blue-900 text-sm text-right hover:text-blue-500 transition cursor-pointer">
-            Já tem uma conta? <span onClick={() => navigate("/login")}>Faça login</span>.
+            Já tem uma conta? <span onClick={() => navigate("/")}>Faça login</span>.
           </p>
         </form>
       </div>
