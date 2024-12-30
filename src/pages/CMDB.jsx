@@ -43,7 +43,7 @@ const SidebarIcon = ({ icon, label, to }) => (
   </Link>
 );
 
-const SearchBar = () => (
+const SearchBar = ({ searchTerm, onSearchChange }) => (
   <div className="relative flex items-center w-full max-w-2xl mx-auto mt-3 bg-white border border-gray-400 rounded-lg shadow-md">
     <div className="absolute left-3">
       <FaSearch className="text-gray-400" />
@@ -52,6 +52,8 @@ const SearchBar = () => (
       type="text"
       placeholder="Buscar por itens de configuração..."
       className="w-full py-2 pl-10 pr-4 text-lg text-gray-700 rounded-lg focus:outline-none"
+      value={searchTerm}
+      onChange={(e) => onSearchChange(e.target.value)}
     />
   </div>
 );
@@ -155,6 +157,7 @@ const CMDB = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newGraphTitle, setNewGraphTitle] = useState("");
   const [produtos, setProdutos] = useState([{ nome: "", quantidade: "" }]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const sidebarIcons = [
     { icon: <FaHome />, label: "Home", to: "/tela" },
@@ -231,6 +234,10 @@ const CMDB = () => {
     setProdutos(updatedProdutos);
   };
 
+  const filteredGraphs = graphs.filter((graph) =>
+    graph.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="absolute w-20 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
@@ -241,35 +248,33 @@ const CMDB = () => {
       </div>
 
       <div className="ml-24 pt-8 pb-16 px-6">
-        <div className="flex items-center justify-center space-x-4">
-          <SearchBar />
+        <div className="flex items-center justify-between space-x-4">
+          <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+          <div className="flex items-center space-x-4">
+            <div>
+              <label htmlFor="graph-type" className="text-lg font-medium text-gray-700 mr-2">
+                Escolha o tipo de gráfico:
+              </label>
+              <select
+                id="graph-type"
+                value={newGraphType}
+                onChange={handleGraphTypeChange}
+                className="border p-2 rounded-lg"
+              >
+                <option value="bar">Gráfico de Barras</option>
+                <option value="line">Gráfico de Linhas</option>
+              </select>
+            </div>
+            <button
+              onClick={openModal}
+              className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300"
+            >
+              Adicionar Novo Gráfico
+            </button>
+          </div>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="graph-type" className="text-lg font-medium text-gray-700 mr-2">
-            Escolha o tipo de gráfico:
-          </label>
-          <select
-            id="graph-type"
-            value={newGraphType}
-            onChange={handleGraphTypeChange}
-            className="border p-2 rounded-lg"
-          >
-            <option value="bar">Gráfico de Barras</option>
-            <option value="line">Gráfico de Linhas</option>
-          </select>
-        </div>
-
-        <div className="mt-4">
-          <button
-            onClick={openModal}
-            className="mt-6 mx-auto block bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            Adicionar Novo Gráfico
-          </button>
-        </div>
-
-        {graphs.map((graph) => (
+        {filteredGraphs.map((graph) => (
           <CMDBCharts
             key={graph.id}
             data={ciData}

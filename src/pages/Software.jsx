@@ -173,7 +173,7 @@ const Modal = ({ isOpen, closeModal, software }) => {
 
           {/* Botões de Ação */}
           <div className="flex space-x-4">
-            <button className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center">
+            <button className="bg-blue-600 text-white py-2 px-4 rounded-lg flex items-center">
               <FaPlus className="mr-2" /> Adicionar
             </button> 
             <button className="px-4 py-2 bg-red-500 text-white rounded-lg flex items-center">

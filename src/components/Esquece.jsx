@@ -14,12 +14,23 @@ const Esquece = () => {
   const handleChangePassword = (e) => {
     e.preventDefault();
 
+    if (!novaSenha || !confirmeSenha) {
+      setErrorMessage("Preencha os campos corretamente.");
+      return;
+    }
+
     if (novaSenha !== confirmeSenha) {
       setErrorMessage("As senhas não coincidem. Tente novamente.");
       return;
     }
 
-    localStorage.setItem("senha", novaSenha);
+    const userData = JSON.parse(localStorage.getItem("usuario"));
+    if (userData) {
+      userData.senha = novaSenha;
+      localStorage.setItem("usuario", JSON.stringify(userData));
+    }
+
+    setErrorMessage(""); // Limpar a mensagem de erro caso a senha seja alterada corretamente.
     navigate("/tela");
   };
 
@@ -33,7 +44,7 @@ const Esquece = () => {
         />
       </div>
 
-      <div className="w-1/2 bg-[#28487E] flex flex-col justify-center items-center">
+      <div className="w-1/2 bg-blue-900 flex flex-col justify-center items-center">
         <div className="w-[112px] h-[112px] rounded-3xl flex items-center justify-center mb-1">
           <img
             className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-1/2"

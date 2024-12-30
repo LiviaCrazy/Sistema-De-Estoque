@@ -120,10 +120,10 @@ const Login = () => {
 
       <div className="flex-1 bg-gray-100 flex flex-col items-center justify-center p-6 relative">
       <img
-          className="absolute h-[200px] top-[90px] transform -translate-x-64 mb-4 left-1/2"
-          src="https://alest.com.br/wp-content/uploads/2018/12/brand.png"
-          alt="Logo Tijuca"
-        />
+            className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-40"
+            src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
+            alt="Logo Tijuca"
+          />
         <LoginForm onLogin={handleSuccessfulLogin} />
       </div>
     </div>

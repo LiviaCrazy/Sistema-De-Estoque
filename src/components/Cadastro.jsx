@@ -58,10 +58,10 @@ const Cadastro = () => {
 
       <div className="flex-1 bg-gray-200 flex flex-col items-center justify-center p-2 relative font-poppins">
       <img
-          className="absolute h-[200px] top-[90px] transform -translate-x-64 mb-4 left-1/2"
-          src="https://alest.com.br/wp-content/uploads/2018/12/brand.png"
-          alt="Logo Tijuca"
-        />
+            className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-1/2"
+            src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
+            alt="Logo Tijuca"
+          />
         <form className="w-full max-w-lg space-y-5" onSubmit={handleCadastro}>
           <div className="relative">
             <FaPencilAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600" />

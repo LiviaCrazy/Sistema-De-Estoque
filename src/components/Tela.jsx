@@ -250,17 +250,20 @@ const Tela = () => {
         <SidebarIcon icon={<FaTools />} label="Settings" to="/perfil" />
       </div>
 
-      <div className="ml-24 pt-8 pb-16 px-6">
+      <div className="ml-24 pt-10 pb-16 px-8">
         <div className="flex items-center justify-center space-x-4">
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <div className="flex space-x-4">
             <button
               onClick={() => openModal()}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center"
+              className="bg-blue-600 text-white py-2 px-4 rounded-lg flex items-center"
             >
-              <FaPlus className="mr-2" /> Adicionar
+              <FaPlus className="mr-5" /> Adicionar
             </button>
           </div>
+          <button className="px-4 py-2 bg-red-500 text-white rounded-lg flex items-center">
+              <FaExclamationCircle className="mr-2" /> Reclamar
+            </button>
         </div>
 
         <div className="mt-12 bg-gray-50 p-6 rounded-lg shadow-md border border-gray-300">
