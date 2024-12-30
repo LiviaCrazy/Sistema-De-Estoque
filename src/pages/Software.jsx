@@ -98,7 +98,7 @@ const Modal = ({ isOpen, closeModal, software }) => {
 };
 
 // Componente Principal da Página Software
-const Software = () => {
+ const Software = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSoftware, setSelectedSoftware] = useState(null);
 
@@ -107,7 +107,7 @@ const Software = () => {
     { icon: <FaCogs />, label: "Software", to: "/software" },
     { icon: <FaDatabase />, label: "CMDB", to: "/cmdb" },
     { icon: <FaFileAlt />, label: "Contracts", to: "/contracts" },
-    { icon: <FaTools />, label: "Settings", to: "/settings" },
+    { icon: <FaTools />, label: "Settings", to: "/perfil" },
   ];
 
   const softwareData = [
@@ -175,15 +175,11 @@ const Software = () => {
           <div className="flex space-x-4">
             <button className="px-4 py-2 bg-green-500 text-white rounded-lg flex items-center">
               <FaPlus className="mr-2" /> Adicionar
-            </button>
+            </button> 
             <button className="px-4 py-2 bg-red-500 text-white rounded-lg flex items-center">
               <FaExclamationCircle className="mr-2" /> Reclamar
             </button>
-            <Link to="/perfil">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center">
-                <FaUser className="mr-2" /> Perfil
-              </button>
-            </Link>
+          
           </div>
         </div>
 

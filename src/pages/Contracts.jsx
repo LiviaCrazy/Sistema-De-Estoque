@@ -110,7 +110,7 @@ const Modal = ({ isOpen, closeModal, contract, modifyContract, addContract, hand
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-yellow-500 text-white rounded-lg mr-2"
+                className="px-4 py-2 bg-blue-500 text-white rounded-lg mr-2"
               >
                 {contract ? "Salvar" : "Adicionar"}
               </button>
@@ -155,7 +155,7 @@ const Contracts = () => {
     { icon: <FaCogs />, label: "Software", to: "/software" },
     { icon: <FaDatabase />, label: "CMDB", to: "/cmdb" },
     { icon: <FaFileAlt />, label: "Contratos", to: "/contracts" },
-    { icon: <FaTools />, label: "Configurações", to: "/settings" },
+    { icon: <FaTools />, label: "Configurações", to: "/perfil" },
   ];
 
   // Função para abrir o modal de edição ou adição
@@ -167,7 +167,7 @@ const Contracts = () => {
       setSelectedContract({
         image: "",
         name: "",
-        details: "",
+        details: "",  
         startDate: "",
         endDate: "",
         value: "",
@@ -241,14 +241,11 @@ const Contracts = () => {
             >
               <FaPlus className="mr-2" /> Adicionar
             </button>
+             
             <button className="px-4 py-2 bg-red-500 text-white rounded-lg flex items-center">
               <FaExclamationCircle className="mr-2" /> Reclamar
             </button>
-            <Link to="/perfil">
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg flex items-center">
-                <FaUser className="mr-2" /> Perfil
-              </button>
-            </Link>
+          
           </div>
         </div>
 

@@ -42,7 +42,7 @@ const Cadastro = () => {
     
     // Aqui a animação vai acontecer antes de ir para o login
     setTimeout(() => {
-      navigate("/login");
+      navigate("/");
     }, 1000); // Aguardar a animação durar 1 segundo (1000ms)
   };
 
