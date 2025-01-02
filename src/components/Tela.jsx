@@ -256,14 +256,11 @@ const Tela = () => {
           <div className="flex space-x-4">
             <button
               onClick={() => openModal()}
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg flex items-center"
+              className="bg-blue-600 text-white py-2 px-6 rounded-lg flex items-center"
             >
               <FaPlus className="mr-5" /> Adicionar
             </button>
           </div>
-          <button className="px-4 py-2 bg-red-500 text-white rounded-lg flex items-center">
-              <FaExclamationCircle className="mr-2" /> Reclamar
-            </button>
         </div>
 
         <div className="mt-12 bg-gray-50 p-6 rounded-lg shadow-md border border-gray-300">

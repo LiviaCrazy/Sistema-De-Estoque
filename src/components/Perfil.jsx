@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Importando useNavigate
 import { FaUserCircle, FaCamera, FaTrashAlt } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
 function Perfil() {
   // Estado para armazenar a imagem do avatar
@@ -18,6 +18,9 @@ function Perfil() {
     nome: '',
     email: ''
   });
+
+  // Estado para controlar a visibilidade do modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Hook para navegação
   const navigate = useNavigate();
@@ -73,6 +76,23 @@ function Perfil() {
     navigate(-1); // Volta para a página anterior no histórico
   };
 
+  // Função para abrir o modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Função para fechar o modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Função para fechar o modal ao clicar fora
+  const handleOutsideClick = (event) => {
+    if (event.target.id === "modal-overlay") {
+      closeModal();
+    }
+  };
+
   return (
     <div className="flex w-full h-screen font-sans">
 
@@ -125,8 +145,12 @@ function Perfil() {
 
         {/* Botões */}
         <div className="flex flex-wrap justify-center gap-4">
-      
-          <button className="bg-white text-blue-900 border py-2 px-6 rounded-lg w-64 h-12 transition-all hover:bg-red-600 hover:text-white border-gray-950">Reclamar</button>
+          <button
+            className="bg-white text-blue-900 border py-2 px-6 rounded-lg w-64 h-12 transition-all hover:bg-red-600 hover:text-white border-gray-950"
+            onClick={openModal} // Abrir o modal ao clicar
+          >
+            Reclamar
+          </button>
 
           <button className="bg-white text-blue-900 border py-2 px-6 rounded-lg w-64 h-12 transition-all hover:bg-blue-600 hover:text-white border-gray-950" onClick={() => navigate("/esqueci")}>Mudar Senha</button>
 
@@ -173,6 +197,34 @@ function Perfil() {
         </button>
       </div>
 
+      {/* Modal */}
+      {isModalOpen && (
+        <div 
+          id="modal-overlay"
+          className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-md flex justify-center items-center z-50 transition-opacity duration-500"
+          onClick={handleOutsideClick} // Fecha o modal ao clicar fora
+        >
+          <div className="bg-white p-4 rounded-2xl w-96 shadow-xl transform transition-all duration-300">
+            <h3 className="text-2xl font-semibold mb-5 text-center bg-gradient-to-r from-red-500 to-red-700 text-white rounded-xl py-3">
+              Faça sua Reclamação
+            </h3>
+            <textarea
+              className="w-full p-6 border border-red-600 rounded-lg mb-4 hover:border-red-800 transition-all"
+              rows="4"
+              placeholder="Fale o seu problema..."
+            ></textarea>
+
+            <div className="flex justify-center items-center gap-4">
+              <button
+                onClick={closeModal} // Fechar o modal
+                className= " bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-800 transition-all"
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
