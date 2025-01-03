@@ -161,7 +161,6 @@ const CMDB = () => {
 
   const sidebarIcons = [
     { icon: <FaHome />, label: "Home", to: "/tela" },
-    { icon: <FaCogs />, label: "Software", to: "/software" },
     { icon: <FaDatabase />, label: "CMDB", to: "/cmdb" },
     { icon: <FaFileAlt />, label: "Contracts", to: "/contracts" },
     { icon: <FaTools />, label: "Settings", to: "/perfil" },
@@ -240,13 +239,15 @@ const CMDB = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="absolute w-20 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
+      {/* Sidebar fixa */}
+      <div className="fixed w-20 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
         <div className="mb-40"></div>
         {sidebarIcons.map((icon, index) => (
           <SidebarIcon key={index} icon={icon.icon} label={icon.label} to={icon.to} />
         ))}
       </div>
 
+      {/* Conteúdo da página */}
       <div className="ml-24 pt-8 pb-16 px-6">
         <div className="flex items-center justify-between space-x-4">
           <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
