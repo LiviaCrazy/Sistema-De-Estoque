@@ -267,19 +267,19 @@ const Tela = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="fixed w-20 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
+      <div className="fixed w-24 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
       <div className="mb-40"></div>
-        <SidebarIcon icon={<FaHome />} label="Home" to="/Tela" />
+        <SidebarIcon icon={<FaHome />} label="Inicio" to="/Tela" />
         <SidebarIcon icon={<FaDatabase />} label="CMDB" to="/CMDB" />
-        <SidebarIcon icon={<FaFileAlt />} label="Contracts" to="/contracts" />
-        <SidebarIcon icon={<FaTools />} label="Settings" to="/perfil" />
+        <SidebarIcon icon={<FaFileAlt />} label="Contratros" to="/contracts" />
+        <SidebarIcon icon={<FaTools />} label="Confirurações" to="/perfil" />
       </div>
       <div className="ml-24 pt-10 pb-16 px-8">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <div className="flex space-x-4">
           <button
             onClick={() => openModal()}
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg flex items-center"
+            className="bg-blue-600 text-white py-2 px-7 rounded-lg flex items-center"
           >
             <FaPlus className="mr-5" /> Adicionar
           </button>

@@ -160,10 +160,10 @@ const CMDB = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const sidebarIcons = [
-    { icon: <FaHome />, label: "Home", to: "/tela" },
+    { icon: <FaHome />, label: "Inicio", to: "/tela" },
     { icon: <FaDatabase />, label: "CMDB", to: "/cmdb" },
-    { icon: <FaFileAlt />, label: "Contracts", to: "/contracts" },
-    { icon: <FaTools />, label: "Settings", to: "/perfil" },
+    { icon: <FaFileAlt />, label: "Contratros", to: "/contracts" },
+    { icon: <FaTools />, label: "Configurações", to: "/perfil" },
   ];
 
   useEffect(() => {
@@ -240,7 +240,7 @@ const CMDB = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Sidebar fixa */}
-      <div className="fixed w-20 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
+      <div className="fixed w-24 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
         <div className="mb-40"></div>
         {sidebarIcons.map((icon, index) => (
           <SidebarIcon key={index} icon={icon.icon} label={icon.label} to={icon.to} />

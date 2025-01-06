@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FaSearch, FaPlus, FaExclamationCircle, FaHome, FaCogs, FaDatabase, FaFileAlt, FaTools, FaTrashAlt, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-
-
-
 // Componente SidebarIcon - Exibe um ícone de link na barra lateral
 const SidebarIcon = ({ icon, label, to }) => (
   <Link to={to} className="flex flex-col items-center mb-10 hover:text-white group">
@@ -81,7 +78,6 @@ const ContentSection = ({ title, data, openModal, deleteContract, viewDetails })
     </ul>
   </div>
 );
-
 
 // Componente ContractModal - Modal para adicionar ou editar contrato
 const ContractModal = ({ isOpen, closeModal, contract, handleChange, handleSubmit }) => {
@@ -175,7 +171,7 @@ const Contracts = () => {
     JSON.parse(localStorage.getItem("contracts")) || [
       {
         image: "https://example.com/contract1-logo.png",
-        name: "Contrato A",
+        name: "Exemplo",
         details: "Descrição do Contrato A",
         id: "201",
         startDate: "2023-01-01",
@@ -189,9 +185,9 @@ const Contracts = () => {
   const [searchTerm, setSearchTerm] = useState(""); // Termo de busca
 
   const sidebarIcons = [
-    { icon: <FaHome />, label: "Início", to: "/Tela" },
+    { icon: <FaHome />, label: "Inicio", to: "/tela" },
     { icon: <FaDatabase />, label: "CMDB", to: "/cmdb" },
-    { icon: <FaFileAlt />, label: "Contratos", to: "/contracts" },
+    { icon: <FaFileAlt />, label: "Contratros", to: "/contracts" },
     { icon: <FaTools />, label: "Configurações", to: "/perfil" },
   ];
 
@@ -218,23 +214,30 @@ const Contracts = () => {
     setIsModalOpen(false);
     setSelectedContract(null);
   };
-// Função para adicionar um novo contrato
-const addContract = (newContractData) => {
-  // Escolher uma cor aleatória entre azul-celeste  e azul-pó 
-  const colors = ["#87ceeb", "#b0e0e6"];
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-  const newContract = { 
-    ...newContractData, 
-    id: Date.now().toString(), 
-    bgColor: randomColor // Adiciona a cor aleatória
+  const addContract = (newContractData) => {
+    // Alternar entre as cores azul-celeste (#87ceeb) e azul-pó (#b0e0e6)
+    const colors = ["#87ceeb", "#b0e0e6"];
+    const colorIndex = contracts.length % 2; // Alterna entre 0 e 1 (se o número de contratos for par ou ímpar)
+    const randomColor = colors[colorIndex]; // Escolhe a cor baseada no índice
+
+    const newContract = { 
+      ...newContractData, 
+      id: Date.now().toString(), 
+      bgColor: randomColor // Adiciona a cor alternada
+    };
+
+    // Atualiza o estado com o novo contrato
+    const updatedContracts = [...contracts, newContract];
+    setContracts(updatedContracts);
+
+    // Armazena os contratos no localStorage
+    localStorage.setItem("contracts", JSON.stringify(updatedContracts));
+
+    // Fecha o modal
+    closeModal();
   };
-  const updatedContracts = [...contracts, newContract];
-  setContracts(updatedContracts);
-  localStorage.setItem("contracts", JSON.stringify(updatedContracts));
-  closeModal();
-};
-  // Função para modificar um contrato existente
+
   const modifyContract = (modifiedContract) => {
     const updatedContracts = contracts.map((c) => (c.id === modifiedContract.id ? modifiedContract : c));
     setContracts(updatedContracts);
@@ -242,19 +245,16 @@ const addContract = (newContractData) => {
     closeModal();
   };
 
-  // Função para excluir contrato
   const deleteContract = (id) => {
     const updatedContracts = contracts.filter((contract) => contract.id !== id);
     setContracts(updatedContracts);
     localStorage.setItem("contracts", JSON.stringify(updatedContracts));
   };
 
-  // Função para atualizar os dados do contrato no modal
   const handleChange = (e, key) => {
     setSelectedContract({ ...selectedContract, [key]: e.target.value });
   };
 
-  // Função para enviar o formulário
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedContract.id) {
@@ -264,7 +264,6 @@ const addContract = (newContractData) => {
     }
   };
 
-  // Filtra os contratos com base no termo de busca
   const filteredContracts = contracts.filter((contract) =>
     contract.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -272,7 +271,7 @@ const addContract = (newContractData) => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Barra lateral fixa */}
-      <div className="fixed w-20 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
+      <div className="fixed w-24 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
         <div className="mb-40"></div>
         {sidebarIcons.map((icon, index) => (
           <SidebarIcon key={index} icon={icon.icon} label={icon.label} to={icon.to} />
@@ -286,12 +285,9 @@ const addContract = (newContractData) => {
           <div className="flex space-x-4">
             <button
               onClick={() => openModal()}
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg flex items-center"
+              className="bg-blue-600 text-white py-2 px-8 rounded-lg flex items-center"
             >
               <FaPlus className="mr-2" /> Adicionar
-            </button>
-            <button className="px-4 py-2 bg-red-500 text-white rounded-lg flex items-center">
-              <FaExclamationCircle className="mr-2" /> Reclamar
             </button>
           </div>
         </div>

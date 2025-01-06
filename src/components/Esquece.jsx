@@ -31,7 +31,7 @@ const Esquece = () => {
     }
 
     setErrorMessage(""); // Limpar a mensagem de erro caso a senha seja alterada corretamente.
-    navigate("/tela");
+    navigate("/");
   };
 
   return (
@@ -47,13 +47,13 @@ const Esquece = () => {
       <div className="w-1/2 bg-blue-900 flex flex-col justify-center items-center">
         <div className="w-[112px] h-[112px] rounded-3xl flex items-center justify-center mb-1">
           <img
-            className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-1/2"
+            className="fixed h-[170px] left-1/2 top-[50px] transform -translate-x-1/2"
             src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
             alt="Logo Tijuca"
           />
         </div>
 
-        <div className="relative w-[552px] bg-[#e3e4e6] border-l-4 border-[#8199bb] rounded-lg p-8 space-y-6">
+        <div className="relative w-[552px] bg-[#fefefe] rounded-lg p-8 space-y-6">
           <p className="text-[#28487E] text-[22px] font-inter mb-2 font-semibold">Nova Senha</p>
 
           <div className="relative">

@@ -56,9 +56,9 @@ const Cadastro = () => {
         />
       </div>
 
-      <div className="flex-1 bg-gray-200 flex flex-col items-center justify-center p-2 relative font-poppins">
+      <div className="flex-1  bg-gray-100 flex flex-col items-center justify-center p-2 relative font-poppins">
       <img
-            className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-1/2"
+            className="absolute h-[200px] left-1/2 top-[50px] transform -translate-x-1/2"
             src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
             alt="Logo Tijuca"
           />
@@ -70,7 +70,7 @@ const Cadastro = () => {
               placeholder="Nome Completo"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
-              className="w-full p-3 pl-12 border border-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
             />
           </div>
 
@@ -81,7 +81,7 @@ const Cadastro = () => {
               placeholder="E-mail"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 pl-12 border border-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
             />
           </div>
 
@@ -92,7 +92,7 @@ const Cadastro = () => {
               placeholder="Senha"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              className="w-full p-3 pl-12 border border-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
             />
             <button
               type="button"

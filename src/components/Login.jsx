@@ -47,7 +47,7 @@ const LoginForm = ({ onLogin }) => {
           placeholder="Digite seu e-mail"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-4 pl-12 border border-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-full p-4 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
         />
       </div>
 
@@ -58,12 +58,12 @@ const LoginForm = ({ onLogin }) => {
           placeholder="Digite sua senha"
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
-          className="w-full p-4 pl-12 border border-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+          className="w-full p-4 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
         />
         <button
           type="button"
           onClick={() => setShowSenha(!showSenha)}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-600"
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-600 "
         >
           {showSenha ? "Ocultar" : "Mostrar"}
         </button>
