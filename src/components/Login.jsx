@@ -39,8 +39,19 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
-    <form className="w-full max-w-lg space-y-6 mt-16" onSubmit={handleLogin}>
-      <div className="relative">
+    <motion.form
+      className="w-full max-w-lg space-y-6 mt-16"
+      onSubmit={handleLogin}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+    >
+      <motion.div
+        className="relative"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <FaPencilAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600" />
         <input
           type="email"
@@ -49,9 +60,14 @@ const LoginForm = ({ onLogin }) => {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full p-4 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
         />
-      </div>
+      </motion.div>
 
-      <div className="relative">
+      <motion.div
+        className="relative"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <FaPencilAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600" />
         <input
           type={showSenha ? "text" : "password"}
@@ -67,18 +83,25 @@ const LoginForm = ({ onLogin }) => {
         >
           {showSenha ? "Ocultar" : "Mostrar"}
         </button>
-      </div>
+      </motion.div>
 
       {errorMessage && (
-        <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+        <motion.p
+          className="text-red-500 text-sm text-center"
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {errorMessage}
+        </motion.p>
       )}
 
       <motion.button
         type="submit"
         className="w-full p-4 bg-blue-900 text-white rounded-md hover:bg-blue-700 transition"
         animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 0.9, opacity: 0.9 }}
-        transition={{ duration: 0.2, ease: "easeInOut" }}
+        whileHover={{ scale: 0.95, opacity: 0.9 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         Entrar
       </motion.button>
@@ -97,7 +120,7 @@ const LoginForm = ({ onLogin }) => {
           </p>
         </Link>
       </div>
-    </form>
+    </motion.form>
   );
 };
 
@@ -111,19 +134,25 @@ const Login = () => {
   return (
     <div className="flex h-screen font-poppins">
       <div className="flex-1 bg-blue-900 flex items-center justify-center">
-        <img
+        <motion.img
           className="w-2/3 h-auto"
           src="https://www.funcef.com.br/data/files/5A/82/BE/D4/3E9067106F9B2C57BE08A8A8/img_simulador_financeiro.png"
           alt="Logo"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         />
       </div>
 
       <div className="flex-1 bg-gray-100 flex flex-col items-center justify-center p-6 relative">
-      <img
-            className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-40"
-            src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
-            alt="Logo Tijuca"
-          />
+        <motion.img
+          className="absolute h-[200px] left-1/2 top-[80px] transform -translate-x-40"
+          src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
+          alt="Logo Tijuca"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+        />
         <LoginForm onLogin={handleSuccessfulLogin} />
       </div>
     </div>

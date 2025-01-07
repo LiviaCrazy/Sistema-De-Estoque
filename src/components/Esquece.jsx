@@ -37,26 +37,51 @@ const Esquece = () => {
   return (
     <div className="flex h-screen">
       <div className="w-1/2 bg-white flex justify-center items-center">
-        <img
+        <motion.img
           className="w-2/3 h-auto object-contain"
           src="https://previneo.com.br/wp-content/uploads/2023/04/web-seguro.png"
           alt="Logo"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         />
       </div>
 
       <div className="w-1/2 bg-blue-900 flex flex-col justify-center items-center">
-        <div className="w-[112px] h-[112px] rounded-3xl flex items-center justify-center mb-1">
+        <motion.div
+          className="w-[112px] h-[112px] rounded-3xl flex items-center justify-center mb-1"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+        >
           <img
             className="fixed h-[170px] left-1/2 top-[50px] transform -translate-x-1/2"
             src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
             alt="Logo Tijuca"
           />
-        </div>
+        </motion.div>
 
-        <div className="relative w-[552px] bg-[#fefefe] rounded-lg p-8 space-y-6">
-          <p className="text-[#28487E] text-[22px] font-inter mb-2 font-semibold">Nova Senha</p>
+        <motion.div
+          className="relative w-[552px] bg-[#fefefe] rounded-lg p-8 space-y-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+        >
+          <motion.p
+            className="text-[#28487E] text-[22px] font-inter mb-2 font-semibold"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            Nova Senha
+          </motion.p>
 
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <input
               type={senhaVisivel ? "text" : "password"}
               value={novaSenha}
@@ -72,9 +97,14 @@ const Esquece = () => {
             >
               {senhaVisivel ? <AiFillEyeInvisible /> : <AiFillEye />}
             </button>
-          </div>
+          </motion.div>
 
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <input
               type={confirmaVisivel ? "text" : "password"}
               value={confirmeSenha}
@@ -90,10 +120,17 @@ const Esquece = () => {
             >
               {confirmaVisivel ? <AiFillEyeInvisible /> : <AiFillEye />}
             </button>
-          </div>
+          </motion.div>
 
           {errorMessage && (
-            <p className="text-red-600 text-sm text-center">{errorMessage}</p>
+            <motion.p
+              className="text-red-600 text-sm text-center"
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {errorMessage}
+            </motion.p>
           )}
 
           <motion.div
@@ -107,17 +144,22 @@ const Esquece = () => {
               duration: 0.3,
               ease: "easeInOut",
             }}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
           >
             Alterar Senha
           </motion.div>
 
-          <p
+          <motion.p
             className="text-[#28487E] text-[20px] font-normal font-inter cursor-pointer text-center hover:underline mt-4"
             onClick={() => navigate("/")}
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.7 }}
           >
             Voltar
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </div>
   );

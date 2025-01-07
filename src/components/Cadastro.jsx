@@ -39,7 +39,7 @@ const Cadastro = () => {
 
     // Salva os dados do novo usuário no localStorage
     localStorage.setItem("usuario", JSON.stringify(newUser));
-    
+
     // Aqui a animação vai acontecer antes de ir para o login
     setTimeout(() => {
       navigate("/");
@@ -49,21 +49,38 @@ const Cadastro = () => {
   return (
     <div className="flex h-screen">
       <div className="flex-1 bg-blue-900 flex items-center justify-center text-white">
-        <img
+        <motion.img
           className="w-2/3 h-auto"
           src="https://www.funcef.com.br/data/files/12/41/5D/38/96894710AE283737BE08A8A8/img_calculadora_financas.png"
           alt="Logo"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         />
       </div>
 
       <div className="flex-1  bg-gray-100 flex flex-col items-center justify-center p-2 relative font-poppins">
-      <img
-            className="absolute h-[200px] left-1/2 top-[50px] transform -translate-x-1/2"
-            src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
-            alt="Logo Tijuca"
-          />
-        <form className="w-full max-w-lg space-y-5" onSubmit={handleCadastro}>
-          <div className="relative">
+        <motion.img
+          className="absolute h-[200px] left-1/2 top-[50px] transform -translate-x-1/2"
+          src="https://aviculturadonordeste.com.br/wp-content/uploads/2023/12/Tijuca-Alimentos-768x490-1.png"
+          alt="Logo Tijuca"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+        />
+        <motion.form
+          className="w-full max-w-lg space-y-5"
+          onSubmit={handleCadastro}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div
+            className="relative"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <FaPencilAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600" />
             <input
               type="text"
@@ -72,9 +89,14 @@ const Cadastro = () => {
               onChange={(e) => setNome(e.target.value)}
               className="w-full p-3 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
             />
-          </div>
+          </motion.div>
 
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <FaPencilAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600" />
             <input
               type="email"
@@ -83,9 +105,14 @@ const Cadastro = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 pl-12 border border-blue-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
             />
-          </div>
+          </motion.div>
 
-          <div className="relative">
+          <motion.div
+            className="relative"
+            initial={{ y: -50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <FaPencilAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-blue-600" />
             <input
               type={showSenha ? "text" : "password"}
@@ -101,11 +128,18 @@ const Cadastro = () => {
             >
               {showSenha ? "Ocultar" : "Mostrar"}
             </button>
-          </div>
+          </motion.div>
 
           {/* Exibe a mensagem de erro, caso haja */}
           {errorMessage && (
-            <p className="text-red-500 text-sm text-center">{errorMessage}</p>
+            <motion.p
+              className="text-red-500 text-sm text-center"
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {errorMessage}
+            </motion.p>
           )}
 
           {/* Botão com animação de batimento apenas quando o mouse estiver em cima */}
@@ -128,10 +162,15 @@ const Cadastro = () => {
             Continuar
           </motion.button>
 
-          <p className="text-blue-900 text-sm text-right hover:text-blue-500 transition cursor-pointer">
+          <motion.p
+            className="text-blue-900 text-sm text-right hover:text-blue-500 transition cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.6 }}
+          >
             Já tem uma conta? <span onClick={() => navigate("/")}>Faça login</span>.
-          </p>
-        </form>
+          </motion.p>
+        </motion.form>
       </div>
     </div>
   );
