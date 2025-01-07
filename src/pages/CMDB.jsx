@@ -22,6 +22,7 @@ import {
   FaPlus,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion"; // Importando o framer-motion
 
 ChartJS.register(
   CategoryScale,
@@ -36,10 +37,20 @@ ChartJS.register(
 
 const SidebarIcon = ({ icon, label, to }) => (
   <Link to={to} className="flex flex-col items-center mb-10 hover:text-white group">
-    <div className="text-white text-2xl mb-2 group-hover:scale-110 group-hover:text-gray-800 transition-all duration-200 ease-in-out">
+    <motion.div
+      className="text-white text-2xl mb-2 group-hover:scale-110 group-hover:text-gray-800 transition-all duration-200 ease-in-out"
+      whileHover={{ scale: 1.1 }} // Animação suave ao passar o mouse
+    >
       {icon}
-    </div>
-    <p className="text-white text-xs group-hover:text-gray-800">{label}</p>
+    </motion.div>
+    <motion.p
+      className="text-white text-xs group-hover:text-gray-800"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      {label}
+    </motion.p>
   </Link>
 );
 
@@ -96,13 +107,21 @@ const CMDBCharts = ({ data, graph, onDelete, onChangeInfo }) => {
   };
 
   return (
-    <div className="mt-12 flex gap-8">
+    <motion.div
+      className="mt-12 flex gap-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="w-full lg:w-2/3">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold text-center">
             Gráfico {graph.type === "bar" ? "de Barras" : "de Linhas"}
           </h2>
-          <button onClick={() => onDelete(graph.id)} className="text-red-600 hover:text-red-800">
+          <button
+            onClick={() => onDelete(graph.id)}
+            className="text-red-600 hover:text-red-800"
+          >
             <FaTrashAlt />
           </button>
         </div>
@@ -143,7 +162,7 @@ const CMDBCharts = ({ data, graph, onDelete, onChangeInfo }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -240,15 +259,20 @@ const CMDB = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Sidebar fixa */}
-      <div className="fixed w-24 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
-        <div className="mb-40"></div>
+      <motion.div
+        className="fixed w-28 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9"
+        initial={{ x: -300 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="mb-52"></div>
         {sidebarIcons.map((icon, index) => (
           <SidebarIcon key={index} icon={icon.icon} label={icon.label} to={icon.to} />
         ))}
-      </div>
+      </motion.div>
 
       {/* Conteúdo da página */}
-      <div className="ml-24 pt-8 pb-16 px-6">
+      <div className="ml-44 pt-8 pb-16 px-6">
         <div className="flex items-center justify-between space-x-4">
           <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
           <div className="flex items-center space-x-4">
@@ -287,7 +311,12 @@ const CMDB = () => {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center">
+        <motion.div
+          className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h3 className="text-xl font-semibold mb-4">Adicionar Novo Gráfico</h3>
             <div className="flex mb-6">
@@ -361,7 +390,7 @@ const CMDB = () => {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

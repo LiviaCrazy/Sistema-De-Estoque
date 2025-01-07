@@ -17,14 +17,19 @@ function Rotas() {
     <Router>
       <Routes>
       <Route path="/" element={< Login/>} />
+
+    
       <Route path="/cadastro" element={<Cadastro />} />
+
       <Route path="/esqueci" element={<Esquece />} />
+
       <Route path="/tela" element={<Tela />} />
       
       <Route path="/perfil" element={<Perfil />} />
 
 
       <Route path="/CMDB" element={<CMDB />} />
+      
       <Route path="/Contracts" element={< Contracts/>} />
      
 

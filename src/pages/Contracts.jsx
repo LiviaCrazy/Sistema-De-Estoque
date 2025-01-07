@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch, FaPlus, FaExclamationCircle, FaHome, FaCogs, FaDatabase, FaFileAlt, FaTools, FaTrashAlt, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion"; // Importando a framer-motion
 
 // Componente SidebarIcon - Exibe um ícone de link na barra lateral
 const SidebarIcon = ({ icon, label, to }) => (
@@ -14,7 +15,7 @@ const SidebarIcon = ({ icon, label, to }) => (
 
 // Componente SearchBar - Campo de busca para filtrar contratos
 const SearchBar = ({ searchTerm, onSearchChange }) => (
-  <div className="relative flex items-center w-full max-w-2xl mx-auto mt-3 bg-white border border-gray-400 rounded-lg shadow-md">
+  <div className="relative flex items-center w-full max-w-2xl mx-auto  bg-white border border-gray-400 rounded-lg shadow-md">
     <div className="absolute left-3">
       <FaSearch className="text-gray-400" />
     </div>
@@ -30,14 +31,17 @@ const SearchBar = ({ searchTerm, onSearchChange }) => (
 
 // Componente ContentSection - Exibe uma seção com lista de contratos
 const ContentSection = ({ title, data, openModal, deleteContract, viewDetails }) => (
-  <div className="mt-12 bg-gray-50 p-6 rounded-lg shadow-md">
+  <div className="mt-12 mr-11 bg-gray-50 p-6 rounded-lg shadow-md">
     <h2 className="text-xl font-semibold text-gray-700">{title}</h2>
     <ul className="mt-6 space-y-4">
       {data.map((item) => (
-        <li
+        <motion.li
           key={item.id}
-          className="p-4 rounded-lg shadow-md flex justify-between items-center cursor-pointer hover:bg-gray-100"
+          className="p-4  rounded-lg shadow-md flex justify-between items-center cursor-pointer hover:bg-gray-100"
           style={{ backgroundColor: item.bgColor }} // Cor de fundo do contrato
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
         >
           <div className="flex items-center space-x-4">
             <div
@@ -57,7 +61,9 @@ const ContentSection = ({ title, data, openModal, deleteContract, viewDetails })
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                deleteContract(item.id);
+                if (window.confirm("Tem certeza que deseja excluir este contrato?")) {
+                  deleteContract(item.id);
+                }
               }}
               className="text-red-500 hover:text-red-700"
             >
@@ -73,7 +79,7 @@ const ContentSection = ({ title, data, openModal, deleteContract, viewDetails })
               <FaEye />
             </button>
           </div>
-        </li>
+        </motion.li>
       ))}
     </ul>
   </div>
@@ -84,7 +90,12 @@ const ContractModal = ({ isOpen, closeModal, contract, handleChange, handleSubmi
   if (!isOpen) return null; // Não renderiza se o modal não estiver aberto
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+    <motion.div
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm z-50"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
       <div className="bg-white p-9 rounded-lg shadow-md flex flex-col w-96">
         <h2 className="text-xl font-semibold text-gray-700 mb-4">{contract.id ? 'Editar Contrato' : 'Adicionar Contrato'}</h2>
         <div className="space-y-4">
@@ -160,7 +171,7 @@ const ContractModal = ({ isOpen, closeModal, contract, handleChange, handleSubmi
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -216,25 +227,19 @@ const Contracts = () => {
   };
 
   const addContract = (newContractData) => {
-    // Alternar entre as cores azul-celeste (#87ceeb) e azul-pó (#b0e0e6)
     const colors = ["#87ceeb", "#b0e0e6"];
-    const colorIndex = contracts.length % 2; // Alterna entre 0 e 1 (se o número de contratos for par ou ímpar)
-    const randomColor = colors[colorIndex]; // Escolhe a cor baseada no índice
+    const colorIndex = contracts.length % 2; 
+    const randomColor = colors[colorIndex]; 
 
     const newContract = { 
       ...newContractData, 
       id: Date.now().toString(), 
-      bgColor: randomColor // Adiciona a cor alternada
+      bgColor: randomColor 
     };
 
-    // Atualiza o estado com o novo contrato
     const updatedContracts = [...contracts, newContract];
     setContracts(updatedContracts);
-
-    // Armazena os contratos no localStorage
     localStorage.setItem("contracts", JSON.stringify(updatedContracts));
-
-    // Fecha o modal
     closeModal();
   };
 
@@ -270,16 +275,20 @@ const Contracts = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Barra lateral fixa */}
-      <div className="fixed w-24 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9">
-        <div className="mb-40"></div>
+      {/* Sidebar fixa */}
+      <motion.div
+        className="fixed w-28 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9"
+        initial={{ x: -300 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="mb-52"></div>
         {sidebarIcons.map((icon, index) => (
           <SidebarIcon key={index} icon={icon.icon} label={icon.label} to={icon.to} />
         ))}
-      </div>
+      </motion.div>
 
-      <div className="ml-24 pt-8 pb-16 px-6">
-        {/* Barra de busca e botões */}
+      <div className="ml-40 pt-8 pb-16 px-6">
         <div className="flex items-center justify-center space-x-4">
           <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
           <div className="flex space-x-4">
@@ -292,7 +301,6 @@ const Contracts = () => {
           </div>
         </div>
 
-        {/* Seção de contratos */}
         <ContentSection
           title="Seção de Contratos"
           data={filteredContracts}
@@ -302,7 +310,6 @@ const Contracts = () => {
         />
       </div>
 
-      {/* Modal para adicionar ou editar contratos */}
       <ContractModal
         isOpen={isModalOpen}
         closeModal={closeModal}
