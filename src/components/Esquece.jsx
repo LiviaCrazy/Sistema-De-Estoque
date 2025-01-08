@@ -52,7 +52,7 @@ const Esquece = () => {
           className="w-[112px] h-[112px] rounded-3xl flex items-center justify-center mb-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
+          transition={{ duration: 1, delay: 0.2 }}
         >
           <img
             className="fixed h-[170px] left-1/2 top-[50px] transform -translate-x-1/2"
