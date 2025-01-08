@@ -31,7 +31,11 @@ const Esquece = () => {
     }
 
     setErrorMessage(""); // Limpar a mensagem de erro caso a senha seja alterada corretamente.
-    navigate("/");
+    navigate("/perfil");
+  };
+
+  const handleGoBack = () => {
+    navigate(-1); // Redireciona para a página anterior
   };
 
   return (
@@ -152,7 +156,7 @@ const Esquece = () => {
 
           <motion.p
             className="text-[#28487E] text-[20px] font-normal font-inter cursor-pointer text-center hover:underline mt-4"
-            onClick={() => navigate("/")}
+            onClick={handleGoBack} // Now this is wired to the function
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.7 }}

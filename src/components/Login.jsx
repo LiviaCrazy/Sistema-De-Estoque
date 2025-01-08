@@ -8,6 +8,7 @@ const LoginForm = ({ onLogin }) => {
   const [senha, setSenha] = useState("");
   const [showSenha, setShowSenha] = useState(false);
   const [errorMessage, setErrorMessage] = useState(""); // Mensagem de erro
+  const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
 
   useEffect(() => {
     if (errorMessage) {
@@ -26,16 +27,22 @@ const LoginForm = ({ onLogin }) => {
       return;
     }
 
+    setIsLoading(true); // Ativa o carregamento
+
     const userData = JSON.parse(localStorage.getItem("usuario"));
     if (
       userData &&
       userData.email === emailTrimmed &&
       userData.senha === senhaTrimmed
     ) {
+      // Salva o estado de login no localStorage
+      localStorage.setItem("isLoggedIn", "true");
       onLogin();
     } else {
       setErrorMessage("Credenciais inválidas. Tente novamente.");
     }
+    
+    setIsLoading(false); // Desativa o carregamento
   };
 
   return (
@@ -120,12 +127,35 @@ const LoginForm = ({ onLogin }) => {
           </p>
         </Link>
       </div>
+
+      {/* Trava tela */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+          <motion.div
+            className="text-white text-xl"
+            animate={{ scale: 1, opacity: 1 }}
+            initial={{ scale: 0.5, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            Carregando...
+          </motion.div>
+        </div>
+      )}
     </motion.form>
   );
 };
 
 const Login = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Verifica se o usuário já está logado
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+      // Se estiver logado, redireciona para a tela principal
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleSuccessfulLogin = () => {
     navigate("/tela");
