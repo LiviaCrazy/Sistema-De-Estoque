@@ -10,6 +10,8 @@ import Perfil from '../src/components/Perfil';
 import CMDB from '../src/pages/CMDB';
 import Contracts from '../src/pages/Contracts';
 
+import Email from "../src/components/Email";
+
 
 
 function Rotas() {
@@ -31,6 +33,8 @@ function Rotas() {
       <Route path="/CMDB" element={<CMDB />} />
       
       <Route path="/Contracts" element={< Contracts/>} />
+
+      <Route path="/Email" element={< Email/>} />
      
 
       </Routes>

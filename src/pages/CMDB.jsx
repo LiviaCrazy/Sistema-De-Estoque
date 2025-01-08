@@ -19,10 +19,9 @@ import {
   FaFileAlt,
   FaTools,
   FaTrashAlt,
-  FaPlus,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion"; // Importando o framer-motion
+import { motion } from "framer-motion"; 
 
 ChartJS.register(
   CategoryScale,
@@ -39,7 +38,7 @@ const SidebarIcon = ({ icon, label, to }) => (
   <Link to={to} className="flex flex-col items-center mb-10 hover:text-white group">
     <motion.div
       className="text-white text-2xl mb-2 group-hover:scale-110 group-hover:text-gray-800 transition-all duration-200 ease-in-out"
-      whileHover={{ scale: 1.1 }} // Animação suave ao passar o mouse
+      whileHover={{ scale: 1.1 }}
     >
       {icon}
     </motion.div>
@@ -252,6 +251,21 @@ const CMDB = () => {
     setProdutos(updatedProdutos);
   };
 
+  // Função para deletar um produto e fundi-lo com o próximo
+  const handleDeleteProduto = (index) => {
+    if (index < produtos.length - 1) {
+      const updatedProdutos = produtos.map((produto, idx) =>
+        idx === index
+          ? { ...produto, nome: produto.nome + " & " + produtos[idx + 1].nome, quantidade: produto.quantidade + produtos[idx + 1].quantidade }
+          : idx !== index + 1 ? produto : null
+      ).filter(Boolean);
+      setProdutos(updatedProdutos);
+    } else {
+      const updatedProdutos = produtos.filter((_, idx) => idx !== index);
+      setProdutos(updatedProdutos);
+    }
+  };
+
   const filteredGraphs = graphs.filter((graph) =>
     graph.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -326,7 +340,7 @@ const CMDB = () => {
               <input
                 id="newGraphTitle"
                 type="text"
-                placeholder="título do gráfico"
+                placeholder="Título do gráfico"
                 className="border border-gray-200 p-2 rounded-lg w-72"
                 value={newGraphTitle}
                 onChange={handleGraphTitleChange}
@@ -351,12 +365,12 @@ const CMDB = () => {
               onClick={handleAddProduto}
               className="bg-blue-600 text-white py-2 px-4 rounded-lg w-full mb-4"
             >
-              Adicionar Produtor
+              Adicionar Produto
             </button>
 
             {produtos.map((produto, index) => (
-              <div key={index} className="mb-4">
-                <div className="flex gap-2">
+              <div key={index} className="mb-4 flex items-center">
+                <div className="flex gap-2 w-full">
                   <input
                     type="text"
                     placeholder="Adicionar Produto"
@@ -372,6 +386,12 @@ const CMDB = () => {
                     onChange={(e) => handleProdutoChange(index, "quantidade", e.target.value)}
                   />
                 </div>
+                <button
+                  onClick={() => handleDeleteProduto(index)}
+                  className="ml-2 bg-red-600 text-white py-1 px-2 rounded-lg hover:bg-red-700 transition duration-300"
+                >
+                  Deletar
+                </button>
               </div>
             ))}
 

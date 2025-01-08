@@ -114,7 +114,7 @@ const LoginForm = ({ onLogin }) => {
           </p>
         </Link>
 
-        <Link to="/esqueci">
+        <Link to="/Email">
           <p className="hover:text-blue-500 transition cursor-pointer">
             Esqueceu a senha?
           </p>
