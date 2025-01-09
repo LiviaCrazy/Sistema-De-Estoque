@@ -199,7 +199,7 @@ function Perfil() {
       {isModalOpen && (
         <motion.div 
           id="modal-overlay"
-          className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-md flex justify-center items-center z-50 transition-opacity duration-500"
+          className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center z-50 transition-opacity duration-500"
           onClick={handleOutsideClick}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

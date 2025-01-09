@@ -326,13 +326,13 @@ const CMDB = () => {
 
       {isModalOpen && (
         <motion.div
-          className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center"
+          className="fixed inset-0  bg-gray-500 bg-opacity-60 backdrop-blur-sm flex justify-center items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         >
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h3 className="text-xl font-semibold mb-4">Adicionar Novo Gráfico</h3>
+            <h3 className="text-xl font-semibold mb-4 flex justify-center items-center">Adicionar Novo Gráfico</h3>
             <div className="flex mb-6">
               <label htmlFor="newGraphTitle" className="mr-0">
                 Título:

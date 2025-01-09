@@ -91,13 +91,13 @@ const ContractModal = ({ isOpen, closeModal, contract, handleChange, handleSubmi
 
   return (
     <motion.div
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 backdrop-blur-sm z-50"
+      className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-60 backdrop-blur-sm z-50"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
       <div className="bg-white p-9 rounded-lg shadow-md flex flex-col w-96">
-        <h2 className="text-xl font-semibold text-gray-700 mb-4">{contract.id ? 'Editar Contrato' : 'Adicionar Contrato'}</h2>
+        <h2 className="text-xl font-semibold text-gray-700 mb-4 flex justify-center items-center">{contract.id ? 'Editar Contrato' : 'Adicionar Contrato'}</h2>
         <div className="space-y-4">
           {/* Formulário para editar ou adicionar contrato */}
           <div>

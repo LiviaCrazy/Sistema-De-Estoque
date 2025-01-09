@@ -35,6 +35,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => (
 );
 
 // Componente de Modal para adicionar ou ver detalhes de um produto
+// Componente de Modal para adicionar ou ver detalhes de um produto
 const Modal = ({ isOpen, closeModal, handleAddProduct, productDetails }) => {
   const [newProduct, setNewProduct] = useState({
     name: "",
@@ -92,7 +93,7 @@ const Modal = ({ isOpen, closeModal, handleAddProduct, productDetails }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex justify-center items-center bg-gray-500 bg-opacity-60 backdrop-blur-sm z-50">
       <motion.div
         className="bg-white p-9 rounded-lg shadow-xl max-w-lg w-full"
         initial={{ opacity: 0 }}
@@ -101,16 +102,19 @@ const Modal = ({ isOpen, closeModal, handleAddProduct, productDetails }) => {
       >
         {productDetails ? (
           <>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Detalhes do Produto</h2>
+            <div className="flex flex-col items-center">
+              <img
+                src={productDetails.image}
+                alt={productDetails.name}
+                className="w-48 h-48 object-cover rounded-lg mb-4"
+              />
+              <h2 className="text-xl font-semibold text-gray-700 mb-4">Detalhes do Produto</h2>
+            </div>
             <div className="mb-4">
               <p><strong>Nome:</strong> {productDetails.name}</p>
               <p><strong>Marca:</strong> {productDetails.brand}</p>
               <p><strong>ID:</strong> {productDetails.id}</p>
               <p><strong>Quantidade:</strong> {productDetails.quantity}</p>
-              <div>
-                <strong>Imagem:</strong>
-                <img src={productDetails.image} alt={productDetails.name} className="w-32 h-32 mt-2 object-cover rounded-lg" />
-              </div>
             </div>
             <div className="flex justify-end mt-4">
               <button
@@ -124,7 +128,16 @@ const Modal = ({ isOpen, closeModal, handleAddProduct, productDetails }) => {
           </>
         ) : (
           <>
-            <h2 className="text-xl font-semibold text-gray-700 mb-4">Adicionar Produto</h2>
+            {newProduct.image && (
+              <div className="flex justify-center mb-4">
+                <img
+                  src={newProduct.image}
+                  alt="Pré-visualização"
+                  className="w-48 h-48 object-cover rounded-lg"
+                />
+              </div>
+            )}
+            <h2 className="text-xl font-semibold text-gray-700 mb-4 flex justify-center items-center">Adicionar Produto</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">Nome</label>
@@ -339,9 +352,9 @@ const Tela = () => {
                   <td className="px-4 py-2 border border-gray-300 text-center">
                     <button
                       onClick={() => handleDeleteProduct(product.id)}
-                      className="text-red-500 hover:text-red-700 transition duration-300"
+                      className="text-red-500 hover:text-red-700"
                     >
-                      <FaTrash className="inline-block" />
+                      <FaTrash />
                     </button>
                   </td>
                 </motion.tr>
