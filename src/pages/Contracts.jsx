@@ -276,6 +276,9 @@ const Contracts = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Sidebar fixa */}
+      
+
+      
       <motion.div
         className="fixed w-28 h-full bg-gradient-to-b from-blue-800 to-blue-700 p-9"
         initial={{ x: -300 }}

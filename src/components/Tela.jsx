@@ -320,7 +320,7 @@ const Tela = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">Produtos</h2>
+          <h2 className="text-xl font-semibold text-gray-700 mb-4 flex justify-center">Produtos</h2>
           <table className="min-w-full mt-6 border-collapse border border-gray-300">
             <thead>
               <tr>
@@ -328,7 +328,7 @@ const Tela = () => {
                 <th className="px-4 py-2 border border-gray-300 text-center">Marca</th>
                 <th className="px-4 py-2 border border-gray-300 text-center">ID</th>
                 <th className="px-4 py-2 border border-gray-300 text-center">Quantidade</th>
-                <th className="px-4 py-2 border border-gray-300 text-center">Ações</th>
+                <th className="px-4 py-2 border border-gray-300 text-center bg-red-600 text-white">Deletar</th>
               </tr>
             </thead>
             <tbody>
