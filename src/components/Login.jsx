@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import axios from "../Serves/api";
 
 const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ const LoginForm = ({ onLogin }) => {
     }
   }, [email, senha]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const emailTrimmed = email.trim();
@@ -29,20 +30,25 @@ const LoginForm = ({ onLogin }) => {
 
     setIsLoading(true); // Ativa o carregamento
 
-    const userData = JSON.parse(localStorage.getItem("usuario"));
-    if (
-      userData &&
-      userData.email === emailTrimmed &&
-      userData.senha === senhaTrimmed
-    ) {
-      // Salva o estado de login no localStorage
-      localStorage.setItem("isLoggedIn", "true");
-      onLogin();
-    } else {
-      setErrorMessage("Credenciais inválidas. Tente novamente.");
+    try {
+      const response = await axios.post('http://192.168.9.250:5001/cadastro/api/login', {
+        email: emailTrimmed,
+        senha: senhaTrimmed,
+      });
+
+      if (response.data.message === 'Login bem-sucedido') {
+        // Armazena o token no localStorage
+        localStorage.setItem("token", response.data.token);
+        onLogin(); 
+      } else {
+        setErrorMessage(response.data.error || "Credenciais inválidas");
+      }
+    } catch (error) {
+      console.error("Erro ao fazer login:", error);
+      setErrorMessage("Erro ao fazer login. Tente novamente.");
+    } finally {
+      setIsLoading(false); // Desativa o carregamento
     }
-    
-    setIsLoading(false); // Desativa o carregamento
   };
 
   return (
@@ -150,8 +156,8 @@ const Login = () => {
 
   useEffect(() => {
     // Verifica se o usuário já está logado
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    if (isLoggedIn === "true") {
+    const token = localStorage.getItem("token");
+    if (token) {
       // Se estiver logado, redireciona para a tela principal
       navigate("/");
     }
