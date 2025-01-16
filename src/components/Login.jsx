@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "../Serves/api";
 
 const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [showSenha, setShowSenha] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // Mensagem de erro
-  const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (errorMessage) {
@@ -17,7 +15,7 @@ const LoginForm = ({ onLogin }) => {
     }
   }, [email, senha]);
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
 
     const emailTrimmed = email.trim();
@@ -28,26 +26,17 @@ const LoginForm = ({ onLogin }) => {
       return;
     }
 
-    setIsLoading(true); // Ativa o carregamento
-
-    try {
-      const response = await axios.post('http://192.168.9.250:5001/cadastro/api/login', {
-        email: emailTrimmed,
-        senha: senhaTrimmed,
-      });
-
-      if (response.data.message === 'Login bem-sucedido') {
-        // Armazena o token no localStorage
-        localStorage.setItem("token", response.data.token);
-        onLogin(); 
-      } else {
-        setErrorMessage(response.data.error || "Credenciais inválidas");
-      }
-    } catch (error) {
-      console.error("Erro ao fazer login:", error);
-      setErrorMessage("Erro ao fazer login. Tente novamente.");
-    } finally {
-      setIsLoading(false); // Desativa o carregamento
+    const userData = JSON.parse(localStorage.getItem("usuario"));
+    if (
+      userData &&
+      userData.email === emailTrimmed &&
+      userData.senha === senhaTrimmed
+    ) {
+      // Salva que o usuário está autenticado no localStorage
+      localStorage.setItem("authenticated", "true");
+      onLogin();
+    } else {
+      setErrorMessage("Credenciais inválidas. Tente novamente.");
     }
   };
 
@@ -92,21 +81,14 @@ const LoginForm = ({ onLogin }) => {
         <button
           type="button"
           onClick={() => setShowSenha(!showSenha)}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-600 "
+          className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-600"
         >
           {showSenha ? "Ocultar" : "Mostrar"}
         </button>
       </motion.div>
 
       {errorMessage && (
-        <motion.p
-          className="text-red-500 text-sm text-center"
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {errorMessage}
-        </motion.p>
+        <p className="text-red-500 text-sm text-center">{errorMessage}</p>
       )}
 
       <motion.button
@@ -119,34 +101,14 @@ const LoginForm = ({ onLogin }) => {
         Entrar
       </motion.button>
 
-      {/* Links de Cadastro e Esqueci */}
       <div className="w-full flex justify-between text-sm text-blue-900 mt-4">
-        <Link to="/cadastro">
-          <p className="hover:text-blue-500 transition cursor-pointer">
-            Ainda não tem uma conta?
-          </p>
+        <Link to="/cadastro" className="hover:underline">
+          Ainda não tem uma conta?
         </Link>
-
-        <Link to="/Email">
-          <p className="hover:text-blue-500 transition cursor-pointer">
-            Esqueceu a senha?
-          </p>
+        <Link to="/email" className="hover:underline">
+          Esqueceu a senha?
         </Link>
       </div>
-
-      {/* Trava tela */}
-      {isLoading && (
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
-          <motion.div
-            className="text-white text-xl"
-            animate={{ scale: 1, opacity: 1 }}
-            initial={{ scale: 0.5, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            Carregando...
-          </motion.div>
-        </div>
-      )}
     </motion.form>
   );
 };
@@ -155,11 +117,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verifica se o usuário já está logado
-    const token = localStorage.getItem("token");
-    if (token) {
-      // Se estiver logado, redireciona para a tela principal
-      navigate("/");
+    // Verifica se o usuário está autenticado
+    const isAuthenticated = localStorage.getItem("authenticated");
+    if (isAuthenticated === "true") {
+      navigate("/"); // Redireciona para a página /tela
     }
   }, [navigate]);
 

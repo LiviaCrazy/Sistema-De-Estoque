@@ -79,12 +79,20 @@ const Email = () => {
 
         <motion.div
           className="relative w-[552px] bg-[#fefefe] rounded-lg p-8 space-y-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
+          initial={{ scale: 0.5, opacity: 0 }} // Add initial scale and opacity for background
+          animate={{ scale: 1, opacity: 1 }} // Animate to normal scale and opacity
+          exit={{ scale: 0.5, opacity: 0 }} // Exit state for animation
+          transition={{ duration: 0.5 }} // Transition duration for background
         >
           {step === 1 ? (
-            <>
+            <motion.div
+              className="email-step"
+              key="email-step"
+              initial={{ scale: 1, opacity: 1 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <motion.p
                 className="text-[#28487E] text-[22px] font-inter mb-2 font-semibold"
                 initial={{ x: -50, opacity: 0 }}
@@ -137,9 +145,16 @@ const Email = () => {
               >
                 Continuar
               </motion.div>
-            </>
+            </motion.div>
           ) : (
-            <>
+            <motion.div
+              className="password-step"
+              key="password-step"
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.5, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
               <motion.p
                 className="text-[#28487E] text-[22px] font-inter mb-2 font-semibold"
                 initial={{ x: -50, opacity: 0 }}
@@ -217,12 +232,10 @@ const Email = () => {
                   duration: 0.3,
                   ease: "easeInOut",
                 }}
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
               >
                 Alterar Senha
               </motion.div>
-            </>
+            </motion.div>
           )}
 
           <motion.p

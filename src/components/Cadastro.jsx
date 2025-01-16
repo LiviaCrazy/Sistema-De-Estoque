@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import axios from "../Serves/api";
 
 const Cadastro = () => {
   const [nome, setNome] = useState("");
@@ -10,9 +9,10 @@ const Cadastro = () => {
   const [senha, setSenha] = useState("");
   const [showSenha, setShowSenha] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleCadastro = async (e) => {
+  const handleCadastro = (e) => {
     e.preventDefault();
 
     const nomeTrimmed = nome.trim();
@@ -24,19 +24,25 @@ const Cadastro = () => {
       return;
     }
 
-    try {
-      await axios.post("http://192.168.9.250:5001/cadastro/api", {
-        nome: nomeTrimmed,
-        email: emailTrimmed,
-        senha: senhaTrimmed,
-      });
-
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Erro ao cadastrar. Tente novamente.");
+    const userData = JSON.parse(localStorage.getItem("usuario"));
+    if (userData && userData.email === emailTrimmed) {
+      setErrorMessage("Este e-mail já está cadastrado. Tente outro. Ou faça login");
+      return;
     }
+
+    const newUser = {
+      nome: nomeTrimmed,
+      email: emailTrimmed,
+      senha: senhaTrimmed,
+    };
+    localStorage.setItem("usuario", JSON.stringify(newUser));
+
+    setIsLoading(true);
+
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/");
+    }, 1000);
   };
 
   return (
@@ -61,7 +67,6 @@ const Cadastro = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
         />
-
         <motion.form
           className="w-full max-w-lg space-y-5"
           onSubmit={handleCadastro}
@@ -69,7 +74,6 @@ const Cadastro = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Campos de Entrada */}
           {["Nome Completo", "E-mail"].map((placeholder, index) => (
             <motion.div
               key={index}
@@ -93,7 +97,6 @@ const Cadastro = () => {
             </motion.div>
           ))}
 
-          {/* Campo de Senha */}
           <motion.div
             className="relative"
             initial={{ y: -50, opacity: 0 }}
@@ -117,7 +120,6 @@ const Cadastro = () => {
             </button>
           </motion.div>
 
-          {/* Exibição de mensagem de erro */}
           {errorMessage && (
             <motion.p
               className="text-red-500 text-sm text-center"
@@ -129,7 +131,6 @@ const Cadastro = () => {
             </motion.p>
           )}
 
-          {/* Botão de Submit com animação */}
           <motion.button
             type="submit"
             className="w-full p-4 bg-blue-900 text-white rounded-md hover:bg-blue-700 transition"
@@ -145,14 +146,14 @@ const Cadastro = () => {
             Continuar
           </motion.button>
 
-          {/* Link de login */}
           <motion.p
             className="text-blue-900 text-sm text-right hover:text-blue-500 transition cursor-pointer"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Já tem uma conta? <span onClick={() => navigate("/")}>Faça login</span>.
+            Já tem uma conta?{" "}
+            <span onClick={() => navigate("/")}>Faça login</span>.
           </motion.p>
         </motion.form>
       </div>

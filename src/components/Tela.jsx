@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { BsSearch } from "react-icons/bs";
 import { FaHome, FaDatabase, FaFileAlt, FaTools, FaPlus, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -8,9 +7,11 @@ import { motion } from "framer-motion";
 // Componente para renderizar ícones de navegação na sidebar
 const SidebarIcon = ({ icon, label, to }) => (
   <Link to={to} className="flex flex-col items-center mb-10 hover:text-white group">
+    {/* Ícone de navegação */}
     <div className="text-white text-2xl mb-2 group-hover:scale-110 group-hover:text-gray-800 transition-all duration-200 ease-in-out">
       {icon}
     </div>
+    {/* Rótulo de navegação */}
     <p className="text-white text-xs group-hover:text-gray-800">{label}</p>
   </Link>
 );
@@ -18,9 +19,11 @@ const SidebarIcon = ({ icon, label, to }) => (
 // Componente para a barra de pesquisa
 const SearchBar = ({ searchTerm, setSearchTerm }) => (
   <div className="relative flex items-center w-full max-w-2xl mx-auto mt-3 bg-white border border-gray-400 rounded-lg shadow-md">
+    {/* Ícone de pesquisa */}
     <div className="absolute left-3">
       <BsSearch className="text-gray-400" />
     </div>
+    {/* Campo de input para buscar produtos */}
     <input
       type="text"
       placeholder="Buscar por produtos, marcas e muito mais..."
@@ -31,6 +34,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }) => (
   </div>
 );
 
+// Componente de Modal para adicionar ou ver detalhes de um produto
 // Componente de Modal para adicionar ou ver detalhes de um produto
 const Modal = ({ isOpen, closeModal, handleAddProduct, productDetails }) => {
   const [newProduct, setNewProduct] = useState({
@@ -254,20 +258,11 @@ const Tela = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [productDetails, setProductDetails] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    // Buscar os produtos do backend
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("http://192.168.9.250:5001/produto/produtos");
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar produtos:", error);
-      }
-    };
-    fetchProducts();
-  }, []);
+  
+  const [contentData, setContentData] = useState(() => {
+    const savedData = localStorage.getItem("contentData");
+    return savedData ? JSON.parse(savedData) : [];
+  });
 
   const openModal = (product = null) => {
     setProductDetails(product);
@@ -279,25 +274,19 @@ const Tela = () => {
     setProductDetails(null);
   };
 
-  const handleAddProduct = async (product) => {
-    try {
-      const response = await axios.post("http://192.168.9.250:5001/produto/produtos", product);
-      setProducts([...products, response.data]);
-    } catch (error) {
-      console.error("Erro ao adicionar produto:", error);
-    }
+  const handleAddProduct = (product) => {
+    const updatedContentData = [...contentData, product];
+    setContentData(updatedContentData);
+    localStorage.setItem("contentData", JSON.stringify(updatedContentData));
   };
 
-  const handleDeleteProduct = async (productId) => {
-    try {
-      await axios.delete(`http://192.168.9.250:5001/produto/produtos/${productId}`);
-      setProducts(products.filter((product) => product.id !== productId));
-    } catch (error) {
-      console.error("Erro ao excluir produto:", error);
-    }
+  const handleDeleteProduct = (productId) => {
+    const updatedContentData = contentData.filter((product) => product.id !== productId);
+    setContentData(updatedContentData);
+    localStorage.setItem("contentData", JSON.stringify(updatedContentData));
   };
 
-  const filteredData = products.filter((product) =>
+  const filteredData = contentData.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -351,15 +340,22 @@ const Tela = () => {
                   transition={{ duration: 0.8 }}
                   className="border-b border-gray-300"
                 >
-                  <td className="px-4 py-2 text-center">{product.name}</td>
-                  <td className="px-4 py-2 text-center">{product.brand}</td>
-                  <td className="px-4 py-2 text-center">{product.id}</td>
-                  <td className="px-4 py-2 text-center">{product.quantity}</td>
-                  <td className="px-4 py-2 text-center text-red-600 cursor-pointer">
-                    <FaTrash
-                      className="hover:text-red-800 transition-all duration-200 ease-in-out"
+                  <td
+                    onClick={() => openModal(product)}
+                    className="px-4 py-2 border border-gray-300 text-blue-950 cursor-pointer"
+                  >
+                    {product.name}
+                  </td>
+                  <td className="px-4 py-2 border border-gray-300">{product.brand}</td>
+                  <td className="px-4 py-2 border border-gray-300">{product.id}</td>
+                  <td className="px-4 py-2 border border-gray-300">{product.quantity}</td>
+                  <td className="px-4 py-2 border border-gray-300 text-center">
+                    <button
                       onClick={() => handleDeleteProduct(product.id)}
-                    />
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <FaTrash />
+                    </button>
                   </td>
                 </motion.tr>
               ))}
